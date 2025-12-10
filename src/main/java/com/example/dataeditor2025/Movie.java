@@ -1,13 +1,18 @@
 package com.example.dataeditor2025;
 
+import javafx.scene.image.Image;
+
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Movie {
     private int rank;
     private String title;
     private long revenue;
     private LocalDate releaseDate;
+    private Image imageData;
     private static ArrayList<Movie> allMovies = new ArrayList<Movie>();
 
     public Movie(int rank, String title, long revenue, LocalDate releaseDate) {
@@ -58,10 +63,19 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
+    public Image getImageData() {
+        return imageData;
+    }
+    public void setImageData(Image imageData) {
+        this.imageData = imageData;
+    }
+
     public String toString() {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
+
         String description = "Rank #" + getRank();
         description += " is \"" + getTitle();
-        description += "\" earning $" + getRevenue();
+        description += "\" earning " + currencyFormat.format(getRevenue());
         description += " starting on release date: " + getReleaseDate();
         return description;
     }
