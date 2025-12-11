@@ -1,9 +1,6 @@
 package com.example.dataeditor2025;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -14,7 +11,7 @@ import java.io.FileInputStream;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class Controller1_TextFields {
+public class Controller1_TextFields extends Controller0_SuperController {
     public TextField rankText;
     public TextField peakText;
     public TextField movieTitleText;
@@ -23,12 +20,14 @@ public class Controller1_TextFields {
     public TextArea toStringText;
     public Button addImageButton;
     public ImageView movieImageView;
+    public ChoiceBox<String> viewChoiceBox;
+
     FileChooser imageFileChooser = new FileChooser();
     int currentMovie = 0;
 
     public void initialize() throws Exception {
-        Film.readFilmData();
-        Video.readVideosData();
+        super.initialize();
+        super.setChoice(viewChoiceBox, "Text");
 
         Movie firstMovie = Movie.getAllMovies().get(currentMovie);
         updateData(firstMovie);
@@ -81,6 +80,7 @@ public class Controller1_TextFields {
         String newRevenue = revenueText.getText();
         newRevenue = newRevenue.replace("$", "");
         newRevenue = newRevenue.replace(",", "");
+        newRevenue = newRevenue.substring(0, newRevenue.indexOf("."));
         movieToChange.setRevenue(Long.parseLong(newRevenue));
         updateData(movieToChange);
     }
@@ -94,6 +94,9 @@ public class Controller1_TextFields {
     public void addImage() throws Exception {
         Stage mainStage = (Stage)addImageButton.getScene().getWindow();
         File selectedFile = imageFileChooser.showOpenDialog(mainStage);
+        if (selectedFile == null) {
+            return;
+        }
         FileInputStream input = new FileInputStream(selectedFile);
         Image newImage = new Image(input);
 

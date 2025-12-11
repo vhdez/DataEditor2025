@@ -73,10 +73,10 @@ public class Movie {
     public String toString() {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
-        String description = "Rank #" + getRank();
+        String description = "#" + getRank();
         description += " is \"" + getTitle();
         description += "\" earning " + currencyFormat.format(getRevenue());
-        description += " starting on release date: " + getReleaseDate();
+        description += " released on: " + getReleaseDate();
         return description;
     }
 }
